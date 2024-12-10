@@ -1,0 +1,11 @@
+Epoch:  0
+  0%|                                                                                                                                            | 0/4401 [00:25<?, ?it/s]
+Traceback (most recent call last):
+  File "/Users/mohamedmafaz/Desktop/Video Generation/train_with_style_loss.py", line 169, in <module>
+    main()
+  File "/Users/mohamedmafaz/Desktop/Video Generation/train_with_style_loss.py", line 158, in main
+    train_fn(
+  File "/Users/mohamedmafaz/Desktop/Video Generation/train_with_style_loss.py", line 64, in train_fn
+    for idx, (x,z1,z2,z3,z4,y) in enumerate(loop):
+             ^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 6)

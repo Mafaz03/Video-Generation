@@ -1,0 +1,27 @@
+Epoch:  0
+  0%|                                                                                                                                            | 0/4401 [00:00<?, ?it/s]/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/torch/amp/autocast_mode.py:265: UserWarning: User provided device_type of 'cuda', but CUDA is not available. Disabling
+  warnings.warn(
+  0%|                           | 11/4401 [01:21<7:33:08,  6.19s/it, D_fake=0.482, D_real=0.494, G_loss=30.1, dice_score_G_val=0.159, style_loss_G=0.159, total_loss=30.1]Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x11ac39760>
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/torch/utils/data/dataloader.py", line 1476, in __del__
+    def __del__(self):
+
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/torch/utils/data/_utils/signal_handling.py", line 67, in handler
+    _error_if_any_worker_fails()
+RuntimeError: DataLoader worker (pid 68635) is killed by signal: Interrupt: 2.
+  0%|                           | 11/4401 [01:25<9:29:24,  7.78s/it, D_fake=0.482, D_real=0.494, G_loss=30.1, dice_score_G_val=0.159, style_loss_G=0.159, total_loss=30.1]
+Traceback (most recent call last):
+  File "/Users/mohamedmafaz/Desktop/Video Generation/train_with_style_loss.py", line 171, in <module>
+    main()
+  File "/Users/mohamedmafaz/Desktop/Video Generation/train_with_style_loss.py", line 160, in main
+    train_fn(
+  File "/Users/mohamedmafaz/Desktop/Video Generation/train_with_style_loss.py", line 98, in train_fn
+    g_scaler.scale(total_loss).backward()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
