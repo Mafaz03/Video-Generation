@@ -49,13 +49,18 @@ def calc_style_loss(y_fake, y, one_channel=False):
     # import pdb; pdb.set_trace()
     return s_loss
 
-def calc_dice_score(y_fake, y):
+def calc_dice_score(y_fake, y, one_channel=False):
+    if one_channel:
+        y_fake = ((y_fake * 0.5 + 0.5) / 255 > 0.5) * 1
+        y = ((y * 0.5 + 0.5) / 255 > 0.5) * 1
 
-    y_fake = ((y_fake * 0.5 + 0.5) / 255 > 0.5) * 1
-    y = ((y * 0.5 + 0.5) / 255 > 0.5) * 1
-
-    dice = Dice(average='micro')
-    dice(y_fake, y)
+        dice = Dice(average='micro')
+        return dice(y_fake, y)
+    
+    y_fake = (y_fake > 0.5).to(torch.int)
+    y = (y > 0.5).to(torch.int)
+    dice = Dice(average='micro', num_classes=3)
+    return dice(y_fake, y)
 
 
 def train_fn(disc, gen, train_loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler):
@@ -91,7 +96,7 @@ def train_fn(disc, gen, train_loader, opt_disc, opt_gen, l1_loss, bce, g_scaler,
             L1 = l1_loss(y_fake, y) * config.L1_LAMBDA
             G_loss = G_fake_loss + L1
             style_loss_G = calc_style_loss(y_fake, y, one_channel=False)
-            dice_score_G = calc_style_loss(y_fake, y, one_channel=False)
+            dice_score_G = calc_dice_score(y_fake, y, one_channel=False)
             total_loss = config.ALPHA * G_loss + config.BETA * style_loss_G
 
         gen.zero_grad()
@@ -100,8 +105,7 @@ def train_fn(disc, gen, train_loader, opt_disc, opt_gen, l1_loss, bce, g_scaler,
         g_scaler.update()
 
         if idx % 10 == 0:
-
-
+            
             D_real_mean = torch.sigmoid(D_real).mean().item()
             D_fake_mean = torch.sigmoid(D_fake).mean().item()
             G_loss_val = G_loss.item()
